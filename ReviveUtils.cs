@@ -9,7 +9,7 @@ using ReviveUtils.Patches;
 
 namespace ReviveUtils
 {
-    [BepInPlugin("jaydev.ReviveUtils", "ReviveUtils", "1.0.0")]
+    [BepInPlugin("jaydev.ReviveUtils", "ReviveUtils", "1.1.0")]
     public class ReviveUtils : BaseUnityPlugin
     {
         internal static ReviveUtils Instance { get; private set; } = null!;
