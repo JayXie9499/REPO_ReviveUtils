@@ -4,6 +4,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using ReviveUtils.Patches;
 
 namespace ReviveUtils
@@ -61,7 +62,7 @@ namespace ReviveUtils
         private static ConfigEntry<int> _truckHealPercentage;
         private static ConfigEntry<bool> _enableSacrificialRevive;
         private static ConfigEntry<int> _sacrificialReviveHpCost;
-        private static ConfigEntry<KeyboardShortcut> _sacrificialReviveKeybind;
+        private static ConfigEntry<string> _sacrificialReviveKeybind;
         private static ConfigEntry<bool> _enablePointRevive;
 
         public static bool EnableShopRespawn
@@ -124,7 +125,7 @@ namespace ReviveUtils
             get { return _sacrificialReviveHpCost.Value; }
         }
 
-        public static KeyboardShortcut SacrificialReviveKeybind
+        public static string SacrificialReviveKeybind
         {
             get { return _sacrificialReviveKeybind.Value; }
         }
@@ -211,7 +212,7 @@ namespace ReviveUtils
             _sacrificialReviveKeybind = configFile.Bind(
                 "Sacrificial Revive",
                 "Keybind",
-                new KeyboardShortcut(KeyCode.R),
+                "R",
                 "Keybind for sacrificial revive"
             );
             _enablePointRevive = configFile.Bind(
@@ -230,8 +231,8 @@ namespace ReviveUtils
             PlayerDeathHead? head = PlayerControllerPatch.grabbedHead;
             PlayerAvatar playerAvatar = PlayerController.instance.playerAvatarScript;
             int hpCost = ConfigManager.SacrificialReviveHpCost;
-
-            if (!ConfigManager.SacrificialReviveKeybind.IsDown() || head == null || playerAvatar.playerHealth.health < hpCost)
+            
+            if (!Keyboard.current[ConfigManager.SacrificialReviveKeybind].IsPressed() || head == null || playerAvatar.playerHealth.health < hpCost)
             {
                 return;
             }
