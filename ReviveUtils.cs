@@ -32,6 +32,7 @@ namespace ReviveUtils
             Harmony ??= new Harmony(Info.Metadata.GUID);
             Harmony.PatchAll(typeof(PlayerAvatarPatch));
             Harmony.PatchAll(typeof(PlayerControllerPatch));
+            Harmony.PatchAll(typeof(PlayerDeathHeadPatch));
             Harmony.PatchAll(typeof(ShopManagerPatch));
         }
 
