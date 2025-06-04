@@ -71,7 +71,7 @@ namespace ReviveUtils.Patches
                 return;
             }
 
-            ReviveUtils.Logger.LogInfo($"玩家 {__instance.playerName} 死亡，準備復活...");
+            ReviveUtils.Logger.LogInfo($"玩家 {__instance.playerName} 死於商店中，準備復活...");
 
             GameObject gameObject = new GameObject("ShopRespawn");
             ShopRespawn shopRespawnComponent = gameObject.AddComponent<ShopRespawn>();
@@ -93,8 +93,16 @@ namespace ReviveUtils.Patches
         {
             yield return new WaitForSeconds(ConfigManager.ShopRespawnDelay);
 
-            PlayerAvatarInstance.Revive();
-            ReviveUtils.Logger.LogInfo($"復活玩家 {PlayerAvatarInstance.playerName}");
+            if (PlayerAvatarInstance.playerDeathHead != null)
+            {
+                PlayerAvatarInstance.Revive();
+                ReviveUtils.Logger.LogInfo($"復活玩家 {PlayerAvatarInstance.playerName}");
+            }
+            else
+            {
+                ReviveUtils.Logger.LogInfo($"取消復活，玩家 {PlayerAvatarInstance.playerName} 已復活或未死亡");
+            }
+
             Object.Destroy(base.gameObject);
         }
     }
