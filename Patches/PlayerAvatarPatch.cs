@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace ReviveUtils.Patches
 {
-
     [HarmonyPatch(typeof(PlayerAvatar))]
     public static class PlayerAvatarPatch
     {
         [HarmonyPostfix]
         [HarmonyPatch("ReviveRPC")]
-        public static void ReviveRPCPostfix(PlayerAvatar __instance, bool _revivedByTruck)
+        public static void ExtractionHealPatch(PlayerAvatar __instance, bool _revivedByTruck)
         {
             if (!ConfigManager.EnableExtractionHeal || _revivedByTruck)
             {
@@ -30,7 +29,7 @@ namespace ReviveUtils.Patches
 
         [HarmonyPrefix]
         [HarmonyPatch("FinalHealRPC")]
-        public static bool FinalHealRPCPrefix(PlayerAvatar __instance)
+        public static bool TruckHealPatch(PlayerAvatar __instance)
         {
             if (!ConfigManager.EnableCustomTruckHeal || __instance.finalHeal || !__instance.isLocal)
             {
@@ -47,7 +46,7 @@ namespace ReviveUtils.Patches
             {
                 TruckScreenText.instance.MessageSendCustom(
                     "",
-                    __instance.playerName + " {arrowright}{truck}{check}\n {point}{shades}{pointright}<b><color=#00FF00>+25</color></b>{heart}",
+                    __instance.playerName + " {arrowright}{truck}{check}\n {point}{shades}{pointright}<b><color=#00FF00>+" + healAmount + "</color></b>{heart}",
                     0
                 );
             }
@@ -65,7 +64,7 @@ namespace ReviveUtils.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch("PlayerDeathRPC")]
-        public static void PlayerDeathRPCPostfix(PlayerAvatar __instance)
+        public static void ShopRespawnPatch(PlayerAvatar __instance)
         {
             if (!ConfigManager.EnableShopRespawn || !SemiFunc.IsMultiplayer() || RunManager.instance.levelCurrent != RunManager.instance.levelShop)
             {

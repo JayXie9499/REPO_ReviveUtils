@@ -7,9 +7,9 @@ namespace ReviveUtils.Patches
     {
         [HarmonyPostfix]
         [HarmonyPatch("Awake")]
-        public static void ChangeLevelPostfix(ShopManager __instance)
+        public static void SacrificialReviveListener(ShopManager __instance)
         {
-            if (!ConfigManager.EnableSacrificialRevive || !SemiFunc.IsMultiplayer())
+            if (!ConfigManager.EnableSacrificialRevive)
             {
                 return;
             }

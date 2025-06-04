@@ -7,9 +7,9 @@ namespace ReviveUtils.Patches
     {
         [HarmonyPostfix]
         [HarmonyPatch("Update")]
-        public static void UpdatePostfix(PlayerDeathHead __instance)
+        public static void InstantRevivePatch(PlayerDeathHead __instance)
         {
-            if (!ConfigManager.EnablePointRevive || !SemiFunc.IsMultiplayer() || !SemiFunc.IsMasterClient())
+            if (!ConfigManager.EnablePointRevive || !SemiFunc.IsMasterClient())
             {
                 return;
             }

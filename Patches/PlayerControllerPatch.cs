@@ -9,7 +9,7 @@ namespace ReviveUtils.Patches
 
         [HarmonyPostfix]
         [HarmonyPatch("FixedUpdate")]
-        public static void FixedUpdatePostfix(PlayerController __instance)
+        public static void GrabbedHeadDetectionPatch(PlayerController __instance)
         {
             if (!ConfigManager.EnableSacrificialRevive || !SemiFunc.IsMultiplayer() || __instance == null)
             {
