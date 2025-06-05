@@ -66,7 +66,7 @@ namespace ReviveUtils.Patches
         [HarmonyPatch("PlayerDeathRPC")]
         public static void ShopRespawnPatch(PlayerAvatar __instance)
         {
-            if (!ConfigManager.EnableShopRespawn || !SemiFunc.IsMultiplayer() || RunManager.instance.levelCurrent != RunManager.instance.levelShop)
+            if (!ConfigManager.EnableShopRespawn || !SemiFunc.IsMasterClient() || RunManager.instance.levelCurrent != RunManager.instance.levelShop)
             {
                 return;
             }
