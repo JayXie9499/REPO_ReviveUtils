@@ -1,4 +1,5 @@
 using HarmonyLib;
+using ReviveUtils.Components;
 
 namespace ReviveUtils.Patches
 {
